@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        #results { display: flex; flex-wrap: wrap; justify-content: center; }
+        .movie { margin: 20px; width: 200px; }
+        .movie img { width: 100%; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Search for a Movie</h1>
+    <input type="text" id="search" placeholder="Enter movie name...">
+    <button onclick="searchMovie()">Search</button>
+    <div id="results"></div>
+    
+    <script>
+        const API_KEY = 'b0e7027f2b1066452aa7c32e2233697c';
+        const BASE_URL = 'https://api.themoviedb.org/3/search/movie';
+        const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
+
+        async function searchMovie() {
+            const query = document.getElementById('search').value;
+            if (!query) return;
+            const response = await fetch(`${BASE_URL}?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
+            const data = await response.json();
+            displayResults(data.results);
+        }
+
+        function displayResults(movies) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            movies.forEach(movie => {
+                const movieElement = document.createElement('div');
+                movieElement.classList.add('movie');
+                movieElement.innerHTML = `
+                    <img src="${IMAGE_BASE_URL + movie.poster_path}" alt="${movie.title}">
+                    <h3>${movie.title}</h3>
+                    <p>${movie.overview}</p>
+                `;
+                resultsDiv.appendChild(movieElement);
+            });
+        }
+    </script>
+</body>
+</html>
