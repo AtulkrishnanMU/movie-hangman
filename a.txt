@@ -1,0 +1,6 @@
+String regex = "\\b(?:public|private|protected|static|final|synchronized|abstract|native|strictfp)?\\s*" + 
+               "(?:<\\s*\\w+\\s*>)?\\s*" +  // Generic return type (optional)
+               "(\\w+)\\s+" +               // Return type
+               "(\\w+)\\s*" +               // Method name
+               "\\(([^)]*)\\)\\s*" +        // Parameter list
+               "(?:throws\\s+([\\w\\s,]+))?"; // Optional throws clause
